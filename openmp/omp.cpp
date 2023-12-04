@@ -1,24 +1,31 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <ctime>
+#include <chrono>
 
 using namespace cv;
 using namespace std;
+using namespace chrono;
 
 int main(int argc, char **argv)
 {
-    // Verificar si se proporciona la ruta de la imagen como argumento
-    if (argc != 2)
+    // Verificar si se proporciona la ruta de la imagen y el número de hilos como argumentos
+    if (argc != 3)
     {
-        cerr << "Usage: " << argv[0] << " <path_to_image>" << endl;
+        cerr << "Usage: " << argv[0] << " <path_to_image> <num_threads>" << endl;
         return -1;
     }
 
-    unsigned t0, t1;
+    // Obtener la ruta de la imagen desde la línea de comandos
+    string imagePath = argv[1];
 
-    t0 = clock();
-    // Lee el archivo de imagen desde la línea de comandos
-    Mat image = imread(argv[1], IMREAD_COLOR);
+    // Obtener el número de hilos desde la línea de comandos
+    int numThreads = atoi(argv[2]);
+
+    // Iniciar el reloj
+    auto start = high_resolution_clock::now();
+
+    // Leer el archivo de imagen desde la línea de comandos
+    Mat image = imread(imagePath, IMREAD_COLOR);
 
     if (image.empty())
     {
@@ -29,7 +36,7 @@ int main(int argc, char **argv)
     int width = image.cols;
     int height = image.rows;
 
-#pragma omp parallel for
+#pragma omp parallel for num_threads(numThreads)
     for (int r = 0; r < image.rows; r++)
     {
         for (int c = 0; c < image.cols; c++)
@@ -44,12 +51,13 @@ int main(int argc, char **argv)
         }
     }
 
+    // Detener el reloj y calcular el tiempo de ejecución
+    auto stop = high_resolution_clock::now();
+    auto duration = duration_cast<milliseconds>(stop - start);
+
     cout << "Image Width: " << width << endl;
     cout << "Image Height: " << height << endl;
-    t1 = clock();
-
-    double time = (double(t1 - t0) / CLOCKS_PER_SEC);
-    cout << "Execution Time: " << time << " seconds" << endl;
+    cout << "Execution Time: " << duration.count() / 1000.0 << " seconds" << endl;
 
     // Mostrar imagen
     imshow("image", image);

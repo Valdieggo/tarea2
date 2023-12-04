@@ -1,6 +1,0 @@
-cmake_minimum_required(VERSION 3.10)
-project(MyProject)
-find_package(OpenCV REQUIRED)
-add_executable(omp omp.cpp)
-target_link_libraries(omp ${OpenCV_LIBS})
-target_compile_options(omp PRIVATE -fopenmp)

@@ -1,3 +1,0 @@
-/Users/valdiego/Desktop/SSOO/tarea 2/build/CMakeFiles/tareita.dir
-/Users/valdiego/Desktop/SSOO/tarea 2/build/CMakeFiles/edit_cache.dir
-/Users/valdiego/Desktop/SSOO/tarea 2/build/CMakeFiles/rebuild_cache.dir
