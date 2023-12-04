@@ -1,0 +1,3 @@
+/Users/valdiego/Desktop/SSOO/tarea2/openmp/build/CMakeFiles/omp.dir
+/Users/valdiego/Desktop/SSOO/tarea2/openmp/build/CMakeFiles/edit_cache.dir
+/Users/valdiego/Desktop/SSOO/tarea2/openmp/build/CMakeFiles/rebuild_cache.dir
